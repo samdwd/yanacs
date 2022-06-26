@@ -1,0 +1,534 @@
+<!doctype html>
+                        <html>
+                            <head>
+                                <meta charset='utf-8'>
+                                <meta name='viewport' content='width=device-width, initial-scale=1'>
+                                <title>Lista de Pedidos</title>
+                                <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+                                <link href='' rel='stylesheet'>
+                                <style>body {
+    background: rgb(213, 217, 233);
+    min-height: 100vh;
+    vertical-align: middle;
+    display: flex;
+    font-family: Muli;
+    font-size: 14px
+}
+
+.card {
+    margin: auto;
+    width: 320px;
+    max-width: 600px;
+    border-radius: 20px
+}
+
+.mt-50 {
+    margin-top: 50px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+
+@media(max-width:767px) {
+    .card {
+        width: 80%
+    }
+}
+
+@media(height:1366px) {
+    .card {
+        width: 75%
+    }
+}
+
+#orderno {
+    padding: 1vh 2vh 0;
+    font-size: smaller
+}
+
+.gap .col-2 {
+    background-color: rgb(213, 217, 233);
+    width: 1.2rem;
+    padding: 1.2rem;
+    margin-top: -2.5rem;
+    border-radius: 1.2rem
+}
+
+.title {
+    display: flex;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 12%
+}
+
+.main {
+    padding: 0 2rem
+}
+
+.main img {
+    border-radius: 7px
+}
+
+.main p {
+    margin-bottom: 0;
+    font-size: 0.75rem
+}
+
+#sub-title p {
+    margin: 1vh 0 2vh 0;
+    font-size: 1rem
+}
+
+.row-main {
+    padding: 1.5vh 0;
+    align-items: center
+}
+
+hr {
+    margin: 1rem -1vh;
+    border-top: 1px solid rgb(214, 214, 214)
+}
+
+.total {
+    font-size: 1rem
+}
+
+@media(height: 1366px) {
+    .main p {
+        margin-bottom: 0;
+        font-size: 1.2rem
+    }
+
+    .total {
+        font-size: 1.5rem
+    }
+}
+
+.btn {
+    background-color: rgb(3, 122, 219);
+    border-color: rgb(3, 122, 219);
+    color: white;
+    margin: 7vh 0;
+    border-radius: 7px;
+    width: 60%;
+    font-size: 0.8rem;
+    padding: 0.8rem;
+    justify-content: center
+}
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    -webkit-user-select: none;
+    transition: none
+}
+
+.btn:hover {
+    color: white
+}
+
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased
+}
+
+
+
+.note {
+    font-size: 0.375em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #222;
+    letter-spacing: 1px
+}
+
+#search {
+    -webkit-box-align: center;
+    align-items: center;
+    background: #9c9c9c;
+    border-radius: 10px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0.5em 0;
+    padding: 0.5em 0.5em 0.5em 1em;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    width: 500px
+}
+
+#search:hover,
+#search:focus {
+    background: 
+}
+
+#search button,
+#search input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    outline: 0
+}
+
+#button i {
+    font-size: 23px
+}
+
+#search button {
+    cursor: pointer;
+    padding: 0 0.25em
+}
+
+#search input {
+    -webkit-box-flex: 1;
+    flex: 1;
+    font-weight: 500;
+    font-size: 20px
+}
+
+#search input::placeholder {
+    color: #222
+}
+</style>
+                                <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+                                <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+                                <script type='text/javascript'></script>
+                            </head>
+                            <body oncontextmenu='return false' class='snippet-body'>
+                                         
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+
+.search {
+    position: relative;
+    box-shadow: 0 0 40px rgba(51, 51, 51, .1)
+}
+
+.search input[type="text"] {
+
+    border-radius:8px;
+    width:75%;
+    height: 60px;
+    text-indent: 25px;
+    border: 2px solid #d6d4d4
+}
+
+.search input[type="text"]:focus {
+    box-shadow: none;
+    border: 2px solid blue;
+    
+    box-shadow: 0 5px 5px blue;
+}
+
+.search .fa-search {
+
+    border-radius:8px;
+    position: absolute;
+    top: 20px;
+    left: 16px
+}
+
+
+
+.cant_personalizada{
+    font-size:70%;
+    border-radius:8px;
+    border: 2px solid #d6d4d4
+}
+
+.search button {
+
+    border-radius:8px;
+    font-size:100%;
+    background: blue
+}
+
+
+.form-inline {
+	display: inline-block;
+}
+.navbar-header.col {
+	padding: 0 !important;
+}
+.navbar {		
+	background: #fff;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-bottom: 1px solid #d6d6d6;
+	box-shadow: 0 0 4px rgba(0,0,0,.1);
+}
+.nav-link img {
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	margin: -8px 0;
+	float: left;
+	margin-right: 10px;
+}
+.navbar .navbar-brand {
+	color: #555;
+	padding-left: 0;
+	padding-right: 50px;
+	font-family: 'Merienda One', sans-serif;
+}
+.navbar .navbar-brand i {
+	font-size: 20px;
+	margin-right: 5px;
+}
+.search-box {
+	position: relative;
+}	
+.search-box input {
+	box-shadow: none;
+	padding-right: 35px;
+	border-radius: 3px !important;
+}
+.search-box .input-group-addon {
+	min-width: 35px;
+	border: none;
+	background: transparent;
+	position: absolute;
+	right: 0;
+	z-index: 9;
+	padding: 7px;
+	height: 100%;
+}
+.search-box i {
+	color: #a0a5b1;
+	font-size: 19px;
+}
+.navbar .nav-item i {
+	font-size: 18px;
+}
+.navbar .dropdown-item i {
+	font-size: 16px;
+	min-width: 22px;
+}
+.navbar .nav-item.open > a {
+	background: none !important;
+}
+.navbar .dropdown-menu {
+	border-radius: 1px;
+	border-color: #e5e5e5;
+	box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.navbar .dropdown-menu a {
+	color: #777;
+	padding: 8px 20px;
+	line-height: normal;
+}
+.navbar .dropdown-menu a:hover, .navbar .dropdown-menu a:active {
+	color: #333;
+}	
+.navbar .dropdown-item .material-icons {
+	font-size: 21px;
+	line-height: 16px;
+	vertical-align: middle;
+	margin-top: -2px;
+}
+.navbar .badge {
+	color: #fff;
+	background: #f44336;
+	font-size: 11px;
+	border-radius: 20px;
+	position: absolute;
+	min-width: 10px;
+	padding: 4px 6px 0;
+	min-height: 18px;
+	top: 5px;
+}
+.navbar a.notifications, .navbar a.messages {
+	position: relative;
+	margin-right: 10px;
+}
+.navbar a.messages {
+	margin-right: 20px;
+}
+.navbar a.notifications .badge {
+	margin-left: -8px;
+}
+.navbar a.messages .badge {
+	margin-left: -4px;
+}	
+.navbar .active a, .navbar .active a:hover, .navbar .active a:focus {
+	background: transparent !important;
+}
+.grupaltodo{
+		width: 100%;
+}
+@media (min-width: 1200px){
+	.form-inline .input-group {
+		width: 300px;
+		margin-left: 30px;
+	}
+}
+@media (max-width: 1199px){
+	.form-inline {
+		display: block;
+		margin-bottom: 10px;
+	}
+	.input-group {
+		width: 100%;
+	}
+
+}</style>    
+<div class="grupaltodo">        
+<nav class="navbar navbar-expand-xl navbar-light bg-light">
+	<a href="#" class="navbar-brand"><i class="fa fa-cube"></i>Corxer<b>SAC</b></a>
+	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<!-- Collection of nav links, forms, and other content for toggling -->
+	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+		<div class="navbar-nav">
+			<a th:href="@{/}" class="nav-item nav-link active">Home</a>
+			<a th:href="@{/producto}" class="nav-item nav-link">Almacen</a>
+						<a th:href="@{/distritoprecio/}" class="nav-item nav-link">Distritos Productos Precios</a>
+			
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pedidos</a>
+				<div class="dropdown-menu">
+					<a th:href="@{/vender/}"class="dropdown-item">Agregar Pedidos</a>
+					<a th:href="@{/ventas/}" class="dropdown-item">Lista de Pedidos</a>
+				<a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/productovendido/}" class="dropdown-item">Cambiar estado de Pedidos</a>
+				</div>
+			</div>
+			<a th:href="@{/reportes/generar_reporte_fecha}" sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item nav-link">Reporte</a>
+		</div>
+		
+		<form class="navbar-form form-inline">
+			
+		</form>
+		<div class="navbar-nav ml-auto">
+			<div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png" class="avatar" alt="Avatar"> <span sec:authentication="principal.username">User</span><b class="caret"></b></a>
+				<div class="dropdown-menu">
+					<a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Perfil</a></a>
+					
+					<div class="dropdown-divider"></div>
+					 <li sec:authorize="isAuthenticated()"></li>  <li ><a th:href="@{/logout}"><i class="glyphicon glyphicon-off"></i>  Cerrar Sesion</a></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+
+                            <div class="card mt-50 mb-50">
+                                <div class="title mx-auto"> Lista de Pedidos</div>
+
+                                     <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>   
+                                            <tr th:each="venta : ${ventas}">
+                                <div  class="col d-flex"><span></span><span class="text-muted" id="orderno" th:text="${venta.fechaYHora}"></span></div>
+                                                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                
+    <div class="col d-flex"><span>#</span><span class="text-muted" id="orderno" th:text="${venta.id}"></span></div>
+        <div class="col d-flex"><span></span><span class="text-muted" id="orderno" th:text="${venta.users.email}"></span></div>
+            <div class="col d-flex"><span></span><span class="text-muted" id="orderno" th:text="${venta.users.firstName}"></span></div>
+                <div class="col d-flex"><span></span><span class="text-muted" id="orderno" th:text="${venta.users.lastName}"></span></div>
+                
+          <div class="col d-flex"><span></span><span class="text-muted" id="orderno" th:text="${venta.distritoPrecio.nombreDistrito}"></span></div>
+              </div>
+    <br>
+    <div class="gap">
+        <div class="col-2 d-flex mx-auto"> </div>
+    </div>
+    
+     
+    <div class="main"> <span id="sub-title">
+        </span>
+        
+       
+        
+        <div th:each="producto : ${venta.productos}" class="row row-main">
+            <div class="col-3"> <img class="img-fluid" src=""> </div>
+            <div class="col-6">
+                <div class="row d-flex">
+                    <p><b></b></p>
+                </div>
+                <div class="row d-flex">
+                    <p class="text-muted" th:text="${producto.nombre}"></p>
+                </div>
+                 <div class="row d-flex">
+                                     <p class="text-muted">Codigo:</p>
+                 
+                   &nbsp; <p class="text-muted" th:text="${producto.codigo}"></p>
+                </div>
+                
+                  <div class="row d-flex">
+                                     <p class="text-muted">Cantidad:</p>
+                 
+                   &nbsp; <p class="text-muted" th:text="${producto.cantidad}"></p>
+                </div>
+                
+                
+                   <div class="row d-flex">
+                                     <p class="text-muted">Estado:</p>
+                   &nbsp; <div>
+<div th:if="${producto.estado}">
+  <p class="badge badge-success">RECIBIDO</p>
+</div>
+<div th:if="${not producto.estado}">
+  <p class="badge badge-warning">PENDIENTE</p>
+</div></div>
+                </div>
+
+
+ <div class="row d-flex">
+                                     <p class="text-muted">Tipo de Envio:</p>
+                 
+                   &nbsp; <p class="text-muted" th:text="${venta.formaDePago}"></p>
+                </div>
+                
+                 <div class="row d-flex">
+                                     <p class="text-muted">Tipo de Pago:</p>
+                 
+                   &nbsp; <p class="text-muted" th:text="${venta.tipoDeEnvio}"></p>
+                </div>
+            </div>
+            
+            
+            
+            <div class="col-3 d-flex justify-content-end">
+                <p >S/.<b th:text="${producto.precio}"></b></p>
+                
+            </div>
+               <div class="col-3 d-flex justify-content-end">
+                                              <p >Total: S/.<b th:text="${producto.total}"></b></p>
+               
+            </div>
+        </div>
+    
+   
+        <hr>
+        <div class="total">
+            <div class="row">
+                <div class="col"> <b> Importe Total:</b> </div>
+                <div class="col d-flex justify-content-end"> <b th:text="${venta.total}"></b> </div>
+                          <a th:href="@{/vender/}"> <button class="btn d-flex mx-auto" > Agregar Pedido </button></a>
+                
+            </div>
+            <hr><br><br>
+        </div>
+    </div>
+</div></tr>
+   </div>
+                            </body>
+                        </html>

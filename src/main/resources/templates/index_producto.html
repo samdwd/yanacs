@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Sistema de Pedidos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merienda+One">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<link href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet" id="bootstrap-css">
+
+ <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <script src="https://unpkg.com/sweetalert2@7.0.9/dist/sweetalert2.all.js"></script>
+<style>
+body {
+	background: #eeeeee;
+}
+.form-inline {
+	display: inline-block;
+}
+.navbar-header.col {
+	padding: 0 !important;
+}
+.navbar {		
+	background: #fff;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-bottom: 1px solid #d6d6d6;
+	box-shadow: 0 0 4px rgba(0,0,0,.1);
+}
+.nav-link img {
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	margin: -8px 0;
+	float: left;
+	margin-right: 10px;
+}
+.navbar .navbar-brand {
+	color: #555;
+	padding-left: 0;
+	padding-right: 50px;
+	font-family: 'Merienda One', sans-serif;
+}
+.navbar .navbar-brand i {
+	font-size: 20px;
+	margin-right: 5px;
+}
+.search-box {
+	position: relative;
+}	
+.search-box input {
+	box-shadow: none;
+	padding-right: 35px;
+	border-radius: 3px !important;
+}
+.search-box .input-group-addon {
+	min-width: 35px;
+	border: none;
+	background: transparent;
+	position: absolute;
+	right: 0;
+	z-index: 9;
+	padding: 7px;
+	height: 100%;
+}
+.search-box i {
+	color: #a0a5b1;
+	font-size: 19px;
+}
+.navbar .nav-item i {
+	font-size: 18px;
+}
+.navbar .dropdown-item i {
+	font-size: 16px;
+	min-width: 22px;
+}
+.navbar .nav-item.open > a {
+	background: none !important;
+}
+.navbar .dropdown-menu {
+	border-radius: 1px;
+	border-color: #e5e5e5;
+	box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.navbar .dropdown-menu a {
+	color: #777;
+	padding: 8px 20px;
+	line-height: normal;
+}
+.navbar .dropdown-menu a:hover, .navbar .dropdown-menu a:active {
+	color: #333;
+}	
+.navbar .dropdown-item .material-icons {
+	font-size: 21px;
+	line-height: 16px;
+	vertical-align: middle;
+	margin-top: -2px;
+}
+.navbar .badge {
+	color: #fff;
+	background: #f44336;
+	font-size: 11px;
+	border-radius: 20px;
+	position: absolute;
+	min-width: 10px;
+	padding: 4px 6px 0;
+	min-height: 18px;
+	top: 5px;
+}
+.navbar a.notifications, .navbar a.messages {
+	position: relative;
+	margin-right: 10px;
+}
+.navbar a.messages {
+	margin-right: 20px;
+}
+.navbar a.notifications .badge {
+	margin-left: -8px;
+}
+.navbar a.messages .badge {
+	margin-left: -4px;
+}	
+.navbar .active a, .navbar .active a:hover, .navbar .active a:focus {
+	background: transparent !important;
+}
+@media (min-width: 1200px){
+	.form-inline .input-group {
+		width: 300px;
+		margin-left: 30px;
+	}
+}
+@media (max-width: 1199px){
+	.form-inline {
+		display: block;
+		margin-bottom: 10px;
+	}
+	.input-group {
+		width: 100%;
+	}
+}
+</style>
+</head> 
+<body>
+<nav class="navbar navbar-expand-xl navbar-light bg-light">
+	<a href="#" class="navbar-brand"><i class="fa fa-cube"></i>Corxer<b>SAC</b></a>
+	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<!-- Collection of nav links, forms, and other content for toggling -->
+	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+		<div class="navbar-nav">
+			<a th:href="@{/}" class="nav-item nav-link active">Home</a>
+									<a th:href="@{/Empresa}" class="nav-item nav-link active">Empresa</a>
+			
+			<a th:href="@{/producto}" class="nav-item nav-link">Almacen</a>
+						<a th:href="@{/distritoprecio/}" class="nav-item nav-link">Distritos Productos Precios</a>
+			
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pedidos</a>
+				<div class="dropdown-menu">
+					<a th:href="@{/vender/}"class="dropdown-item">Agregar Pedidos</a>
+					<a th:href="@{/ventas/}" class="dropdown-item">Lista de Pedidos</a>
+				<a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/productovendido/}" class="dropdown-item">Cambiar estado de Pedidos</a>
+				
+				</div>
+			</div>
+			<a th:href="@{/reportes/generar_reporte_fecha}" sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item nav-link">Reporte</a>
+		</div>
+		
+	
+		<div class="navbar-nav ml-auto">
+			<div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png" class="avatar" alt="Avatar"> <span sec:authentication="principal.username">User</span><b class="caret"></b></a>
+				<div class="dropdown-menu">
+					<a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Perfil</a></a>
+					
+					<div class="dropdown-divider"></div>
+					 <li sec:authorize="isAuthenticated()"></li>  <li ><a th:href="@{/logout}"><i class="glyphicon glyphicon-off"></i>  Cerrar Sesion</a></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+      
+      
+       
+       <style>
+       .table th {
+
+    text-align: center;
+
+}
+
+.table {
+    border-radius: 5px;
+    width: 50%;
+  margin: auto;
+    float: none;
+}
+
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased
+}
+
+
+
+.note {
+    font-size: 0.375em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #222;
+    letter-spacing: 1px
+}
+
+#search {
+    -webkit-box-align: center;
+    align-items: center;
+    background: #9c9c9c;
+    border-radius: 10px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0.5em 0;
+    padding: 0.5em 0.5em 0.5em 1em;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    width: 500px
+}
+
+#search:hover,
+#search:focus {
+    background: 
+}
+
+#search button,
+#search input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    outline: 0
+}
+
+#button i {
+    font-size: 23px
+}
+
+#search button {
+    cursor: pointer;
+    padding: 0 0.25em
+}
+
+#search input {
+    -webkit-box-flex: 1;
+    flex: 1;
+    font-weight: 500;
+    font-size: 20px
+}
+
+#search input::placeholder {
+    color: #222
+}
+
+    #custom-search-form {
+        margin:0;
+        margin-top: 5px;
+        padding: 0;
+    }
+ 
+    #custom-search-form .search-query {
+        padding-right: 3px;
+        padding-right: 4px \9;
+        padding-left: 3px;
+        padding-left: 4px \9;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+ 
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+ 
+    #custom-search-form button {
+        border: 0;
+        background: none;
+        /** belows styles are working good */
+        padding: 2px 5px;
+        margin-top: 2px;
+        position: relative;
+        left: -28px;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+ 
+    .search-query:focus + button {
+        z-index: 3;   
+    }
+    
+    .buscador{
+    width:100%;}
+    .buscainput{
+	width:100%}
+       </style>
+       <br>
+         <div class="container">
+         <div class="container my-2">
+         
+         
+                   <div class="container mt-5 mb-5">
+                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href = "@{/showNewProductoForm}" class="btn btn-primary"> Agregar Producto </a> <br><br><br>
+          <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+    <div class="d-flex justify-content-center row">
+    
+        <div class="col-md-8">
+            <div class="p-2">
+                <h4>Productos o Servicios</h4>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+                <div class="container">
+	<div class="row">
+        <div class="span12">
+            <form th:action="@{/Search}" id="custom-search-form" class="buscador">
+                <div>
+                    <input name="keyword" id="keyword" th:value="${keyword}" type="text" placeholder="Search">
+                    <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+               		<input type="button" value="Limpiar" id="btnClear" onclick="clearSearch()" />
+               
+                </div>
+            </form>
+        </div>
+	</div>
+</div>
+             
+            </div>
+             <tr th:each="personaa : ${listPersonaas}">
+            <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+                <div class="mr-1"><img class="rounded" src="" width="70"></div>
+                  <div class="d-flex flex-row product-desc">
+                        <div class="size mr-1"><span class="text-grey">Codigo:</span><span class="font-weight-bold" th:text="${personaa.codigo}">&nbsp;</span></div>
+                    </div>
+                <div class="d-flex flex-column align-items-center product-details"><span class="font-weight-bold" th:text="${personaa.nombre}"></span>
+                
+                </div>
+                 
+                <div class="d-flex flex-row product-desc">
+                        <div class="size mr-1"><span class="text-grey">Stock:</span><span  th:text="${personaa.existencia}" class="font-weight-bold">&nbsp;M</span></div>
+                    </div>
+                <div>
+                    <SPAN>S/.</SPAN><h5 class="text-grey" th:text="${personaa.precio}"></h5>
+                </div>
+                 <td> <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/editar/} + ${personaa.id}" class="badge badge-primary"><span class="fa fa-edit"></span></a>
+                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="confirmDelete"  th:href="@{/deleteProducto/{id}(id=${personaa.id})}" ><span class="fa fa-trash" data-placement="top" title="Eliminar"></span></a>
+                  </td>
+                  
+            </div>
+            
+          </tr><br>
+               	<div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-12">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-2">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/pageProducto/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-2">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/pageProducto/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-2">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/pageProducto/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
+           
+        </div>
+     
+    </div>
+    
+</div><br></div></div>
+           
+         
+           <style>@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
+
+body {
+    font-family: 'Manrope', sans-serif;
+    background: #eee
+}
+
+.size span {
+    font-size: 11px
+}
+
+.color span {
+    font-size: 11px
+}
+
+.product-deta {
+    margin-right: 70px
+}
+
+.gift-card:focus {
+    box-shadow: none
+}
+
+.pay-button {
+    color: #fff
+}
+
+.pay-button:hover {
+    color: #fff
+}
+
+.pay-button:focus {
+    color: #fff;
+    box-shadow: none
+}
+
+.text-grey {
+    color: #a39f9f
+}
+
+.qty i {
+    font-size: 11px
+}</style>
+    </div>
+    
+    
+
+               <script>
+               $(document).on('click', 'a.confirmDelete', function(e) {
+               	  e.preventDefault(); // Prevent the href from redirecting directly
+               	  var linkURL = $(this).attr("href");
+               	  warnBeforeRedirect(linkURL);
+               	});
+               
+               	function warnBeforeRedirect(linkURL) {
+               	  swal({
+               	    title: "�Estas seguro que deseas eliminar este Producto?",
+               	    text: "Si hace clic en 'Aceptar',seras redirigido a " + linkURL,
+               	    type: "warning",
+               	    showCancelButton: true,
+               	  }).then(function(result) {
+               	    console.log(result);
+               	    if (result.value) {
+               	      window.location.href = linkURL;
+               	    }
+               	  });
+               	}
+            </script>
+            <script type="text/javascript">
+	function clearSearch() {
+		window.location = "[[@{/producto}]]";
+	}
+</script>
+</body>
+</html> 
